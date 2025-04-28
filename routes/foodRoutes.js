@@ -113,7 +113,7 @@ router.get("/my-donations", verifyToken, async (req, res) => {
   const { id: donorId } = req.user;
 
   try {
-    const donations = await Food.find({ donorId });
+    const donations = await Food.find({ donorId }).sort({ _id: -1 });
 
     res.json(donations);
   } catch (err) {
@@ -124,7 +124,9 @@ router.get("/my-donations", verifyToken, async (req, res) => {
 
 // Recipients/Volunteers view food
 router.get("/available", verifyToken, async (req, res) => {
-  const foodList = await Food.find({ availableServings: { $gt: 0 } });
+  const foodList = await Food.find({ availableServings: { $gt: 0 } }).sort({
+    _id: -1,
+  });
   res.json(foodList);
 });
 
@@ -147,7 +149,7 @@ router.get("/assignments", verifyToken, async (req, res) => {
         firstName: 1,
         phone: 1,
       }
-    );
+    ).sort({ _id: -1 });
 
     const allAssignments = [];
 
@@ -271,7 +273,9 @@ router.get("/my-requests", verifyToken, async (req, res) => {
   const { id: userId } = req.user;
 
   try {
-    const foods = await Food.find({ "assignments.recipientId": userId });
+    const foods = await Food.find({ "assignments.recipientId": userId }).sort({
+      _id: -1,
+    });
 
     const userRequests = [];
 
