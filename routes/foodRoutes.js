@@ -180,6 +180,56 @@ router.get("/assignments", verifyToken, async (req, res) => {
   }
 });
 
+// Helper function to send email when delivery starts
+const sendStartDeliveryEmail = async (recipientEmail, foodTitle) => {
+  const mailOptions = {
+    from: "samuvelraja072@gmail.com",
+    to: recipientEmail,
+    subject: "Your Delivery is on the Way!",
+    text: `Hello,\n\nYour ride to deliver the food item "${foodTitle}" has started. Please be ready to receive it!\n\nThank you for using our service!`,
+  };
+
+  await transporter.sendMail(mailOptions);
+};
+
+// Start Delivery - Notify recipient that delivery has started
+router.post("/start-delivery", verifyToken, async (req, res) => {
+  const { foodId, assignmentId } = req.body;
+
+  if (req.user.role !== "volunteer") {
+    return res
+      .status(403)
+      .json({ error: "Only volunteers can start delivery" });
+  }
+
+  try {
+    const food = await Food.findById(foodId);
+    if (!food) {
+      return res.status(404).json({ error: "Food not found" });
+    }
+
+    const assignment = food.assignments.find(
+      (assignment) => assignment._id.toString() === assignmentId
+    );
+
+    if (!assignment) {
+      return res.status(404).json({ error: "Assignment not found" });
+    }
+
+    const recipientEmail = assignment.email;
+    const foodTitle = food.title;
+
+    if (recipientEmail) {
+      await sendStartDeliveryEmail(recipientEmail, foodTitle);
+    }
+
+    res.json({ message: "Delivery start email sent successfully!" });
+  } catch (err) {
+    console.error("Error starting delivery:", err);
+    res.status(500).json({ error: "Error starting delivery" });
+  }
+});
+
 // Deliver food and send email to donor and recipient
 router.post("/deliver", verifyToken, async (req, res) => {
   const { foodId, assignmentId } = req.body;
