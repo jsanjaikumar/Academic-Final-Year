@@ -8,15 +8,15 @@ const nodemailer = require("nodemailer");
 const transporter = nodemailer.createTransport({
   service: "gmail",
   auth: {
-    user: "samuvelraja072@gmail.com",
-    pass: "acusnstouxtxdzep",
+    user: "noreplycatchyfoods@gmail.com",
+    pass: "xytnchadwhikjhls",
   },
 });
 
 // Helper function to send email to the donor after successful donation
 const sendDonorEmail = async (donorEmail, foodTitle) => {
   const mailOptions = {
-    from: "samuvelraja072@gmail.com",
+    from: "noreplycatchyfoods@gmail.com",
     to: donorEmail,
     subject: "Food Donation Successful!",
     text: `Hello,\n\nThank you for your generous donation of the food item "${foodTitle}".\n\nWe appreciate your contribution!`,
@@ -28,7 +28,7 @@ const sendDonorEmail = async (donorEmail, foodTitle) => {
 // Helper function to send email to the recipient after requesting food
 const sendRecipientEmail = async (recipientEmail, foodTitle, servings) => {
   const mailOptions = {
-    from: "samuvelraja072@gmail.com",
+    from: "noreplycatchyfoods@gmail.com",
     to: recipientEmail,
     subject: "Food Request Successful!",
     text: `Hello,\n\nYour request for the food item "${foodTitle}" with ${servings} servings has been successfully processed.\n\nThank you!`,
@@ -40,9 +40,9 @@ const sendRecipientEmail = async (recipientEmail, foodTitle, servings) => {
 // Helper function to send email to the recipient after successful delivery
 const sendDeliveryEmail = async (recipientEmail, foodTitle) => {
   const mailOptions = {
-    from: "samuvelraja072@gmail.com",
+    from: "noreplycatchyfoods@gmail.com",
     to: recipientEmail,
-    subject: "Food Delivery Successful!",
+    subject: "Food Delived Successful!",
     text: `Hello,\n\nYour requested food item "${foodTitle}" has been successfully delivered.\n\nThank you for using our service!`,
   };
 
