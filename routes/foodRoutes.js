@@ -8,8 +8,8 @@ const nodemailer = require("nodemailer");
 const transporter = nodemailer.createTransport({
   service: "gmail",
   auth: {
-    user: "noreplycatchyfoods@gmail.com",
-    pass: "sqqhwholupdwabkc",
+    user: "samuvelraja072@gmail.com",
+    pass: "acusnstouxtxdzep",
   },
 });
 
@@ -42,7 +42,7 @@ const sendDeliveryEmail = async (recipientEmail, foodTitle) => {
   const mailOptions = {
     from: "noreplycatchyfoods@gmail.com",
     to: recipientEmail,
-    subject: "Food Delivery Successful!",
+    subject: "Food Delived Successful!",
     text: `Hello,\n\nYour requested food item "${foodTitle}" has been successfully delivered.\n\nThank you for using our service!`,
   };
 
